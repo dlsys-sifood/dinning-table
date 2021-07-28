@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service;
+package com.dlsys.sifood.dts.response;
 
 import com.dlsys.sifood.dts.dto.DinnigResponse;
 import com.dlsys.sifood.dts.dto.GenericResponse;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class GenericService {
+public class EntityResponse {
 
     private static final String BADREQUESTCODE = HttpStatus.BAD_REQUEST.toString();
     private static final String BADREQUESTDESCRIPTION = "BAD REQUEST";
@@ -24,7 +24,7 @@ public class GenericService {
     private static final String OKREQUESTDESCRIPTION = "OK";
 
     public static ResponseEntity<?> getErrorsFieldResponse(BindingResult result){
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
+        return new ResponseEntity<Map<String, Object>>(ListResponse
                 .responseGeneric(new GenericResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
                         result.getFieldErrors().stream()
                                 .map(e -> "el campo: " + e.getField() + " " + e.getDefaultMessage())
@@ -33,27 +33,27 @@ public class GenericService {
     }
 
     public static ResponseEntity<?> getSuccessfullListDinningTable(List<DinningTable> response){
-        return new ResponseEntity<>(ServiceResponse
+        return new ResponseEntity<>(ListResponse
                 .responseDinningTable(new DinnigResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
                         GenericResponse.toList("Consulta encontrada"), response)), HttpStatus.OK);
     }
 
     public static ResponseEntity<?> getSuccessfullDinningTable(DinningTable response){
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
+        return new ResponseEntity<Map<String, Object>>(ListResponse
                 .responseDinningTable(new DinnigResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
                         GenericResponse.toList("guardado exitoso en el tipo de tablo"), response))
                 , HttpStatus.OK);
     }
 
     public static ResponseEntity<?> getSuccessfullListTableType(List<TableType> response){
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
+        return new ResponseEntity<Map<String, Object>>(ListResponse
                 .responseTableType(new TableTypeResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
                         GenericResponse.toList("actualizado exitoso en el tipo de tablo"), response))
                 , HttpStatus.OK);
     }
 
     public static ResponseEntity<?> getSuccessfullListTableType(TableType response){
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
+        return new ResponseEntity<Map<String, Object>>(ListResponse
                 .responseTableType(new TableTypeResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
                         GenericResponse.toList("guardado exitoso en el tipo de tablo"), response))
                 , HttpStatus.OK);

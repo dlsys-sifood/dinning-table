@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service.tableType;
+package com.dlsys.sifood.dts.service.impl;
 
 import com.dlsys.sifood.dts.entity.TableType;
 import com.dlsys.sifood.dts.model.TableTypeModel;

@@ -1,13 +1,10 @@
-package com.dlsys.sifood.dts.service.tableType;
+package com.dlsys.sifood.dts.service;
 
 import com.dlsys.sifood.dts.dao.ITableTypeDao;
-import com.dlsys.sifood.dts.dto.GenericResponse;
-import com.dlsys.sifood.dts.dto.TableTypeResponse;
 import com.dlsys.sifood.dts.entity.TableType;
 import com.dlsys.sifood.dts.model.TableTypeModel;
-import com.dlsys.sifood.dts.service.GenericService;
-import com.dlsys.sifood.dts.service.ServiceResponse;
-import com.dlsys.sifood.dts.service.tableType.ITableTypeService;
+import com.dlsys.sifood.dts.response.EntityResponse;
+import com.dlsys.sifood.dts.service.impl.ITableTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -31,32 +28,32 @@ public class TableTypeService implements ITableTypeService {
     private static final String BADREQUESTDESCRIPTION = "BAD REQUEST";
 
     @Autowired
-    ITableTypeDao tableDao;
+    private ITableTypeDao tableDao;
 
     @Override
     public ResponseEntity<?> postTableType(TableType table, BindingResult result) {
         if(result.hasErrors()){
-            return GenericService.getErrorsFieldResponse(result);
+            return EntityResponse.getErrorsFieldResponse(result);
         }
         try{
             tableDao.save(table);
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-        return GenericService.getSuccessfullListTableType(table);
+        return EntityResponse.getSuccessfullListTableType(table);
     }
 
     @Override
     public ResponseEntity<?> putPorfile(TableType table, BindingResult result) {
         if(result.hasErrors()){
-            return GenericService.getErrorsFieldResponse(result);
+            return EntityResponse.getErrorsFieldResponse(result);
         }
         try{
             tableDao.save(table);
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-        return GenericService.getSuccessfullListTableType(table);
+        return EntityResponse.getSuccessfullListTableType(table);
     }
 
     @Override
@@ -83,6 +80,6 @@ public class TableTypeService implements ITableTypeService {
             } catch (RuntimeException e){
                 throw new RuntimeException(e);
             }
-            return  GenericService.getSuccessfullListTableType(response);
+            return  EntityResponse.getSuccessfullListTableType(response);
     }
 }

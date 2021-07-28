@@ -2,7 +2,7 @@ package com.dlsys.sifood.dts.controller;
 
 import com.dlsys.sifood.dts.entity.DinningTable;
 import com.dlsys.sifood.dts.model.DinningModel;
-import com.dlsys.sifood.dts.service.dinningTable.IDinningTableService;
+import com.dlsys.sifood.dts.service.impl.IDinningTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,7 +19,7 @@ public class DinningTableController {
 
 
     @Autowired
-    IDinningTableService dinningService;
+    private IDinningTableService dinningService;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<?> postDinningTable(@Valid @RequestBody DinningTable dinning, BindingResult result) {

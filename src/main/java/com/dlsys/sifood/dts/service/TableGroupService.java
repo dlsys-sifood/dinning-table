@@ -1,7 +1,7 @@
-package com.dlsys.sifood.dts.service.tableGroup;
+package com.dlsys.sifood.dts.service;
 
 import com.dlsys.sifood.dts.entity.TableGroup;
-import com.dlsys.sifood.dts.service.tableGroup.ITableGroupService;
+import com.dlsys.sifood.dts.service.impl.ITableGroupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 

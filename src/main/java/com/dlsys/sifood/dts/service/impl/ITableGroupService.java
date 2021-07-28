@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service.tableGroup;
+package com.dlsys.sifood.dts.service.impl;
 
 import com.dlsys.sifood.dts.entity.TableGroup;;
 import org.springframework.http.ResponseEntity;

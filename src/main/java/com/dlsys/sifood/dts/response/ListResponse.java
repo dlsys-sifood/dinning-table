@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service;
+package com.dlsys.sifood.dts.response;
 
 import com.dlsys.sifood.dts.dto.DinnigResponse;
 import com.dlsys.sifood.dts.dto.GenericResponse;
@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class ServiceResponse {
-
+public class ListResponse {
 
     public static Map<String, Object> responseGeneric(GenericResponse generic){
         Map<String, Object> response = new HashMap<>();

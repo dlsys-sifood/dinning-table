@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service.dinningTable;
+package com.dlsys.sifood.dts.service;
 
 import com.dlsys.sifood.dts.dao.IDinningTableDao;
 import com.dlsys.sifood.dts.dao.ITableGroupDao;
@@ -7,8 +7,9 @@ import com.dlsys.sifood.dts.dto.GenericResponse;
 import com.dlsys.sifood.dts.entity.DinningTable;
 import com.dlsys.sifood.dts.entity.TableGroup;
 import com.dlsys.sifood.dts.model.DinningModel;
-import com.dlsys.sifood.dts.service.GenericService;
-import com.dlsys.sifood.dts.service.ServiceResponse;
+import com.dlsys.sifood.dts.response.EntityResponse;
+import com.dlsys.sifood.dts.response.ListResponse;
+import com.dlsys.sifood.dts.service.impl.IDinningTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -34,15 +35,15 @@ public class DinningTableService implements IDinningTableService {
     private static final String BADREQUESTDESCRIPTION = "BAD REQUEST";
 
     @Autowired
-    IDinningTableDao dinningDao;
+    private IDinningTableDao dinningDao;
 
     @Autowired
-    ITableGroupDao tableDao;
+    private ITableGroupDao tableDao;
 
     @Override
     public ResponseEntity<?> postDinningTable(DinningTable dinning, BindingResult result) {
         if(result.hasErrors()){
-            return GenericService.getErrorsFieldResponse(result);
+            return EntityResponse.getErrorsFieldResponse(result);
         }
         try{
             dinningDao.save(dinning);
@@ -52,20 +53,20 @@ public class DinningTableService implements IDinningTableService {
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-        return GenericService.getSuccessfullDinningTable(dinning);
+        return EntityResponse.getSuccessfullDinningTable(dinning);
     }
 
     @Override
     public ResponseEntity<?> putDinningTable(DinningTable dinning, BindingResult result) {
         if(result.hasErrors()){
-            return GenericService.getErrorsFieldResponse(result);
+            return EntityResponse.getErrorsFieldResponse(result);
         }
         try{
             dinningDao.save(dinning);
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-        return GenericService.getSuccessfullDinningTable(dinning);
+        return EntityResponse.getSuccessfullDinningTable(dinning);
     }
 
     @Override
@@ -98,11 +99,11 @@ public class DinningTableService implements IDinningTableService {
             throw new RuntimeException(e);
         }
         if(dinning.isEmpty()){
-            return new ResponseEntity<Map<String, Object>>(ServiceResponse
+            return new ResponseEntity<Map<String, Object>>(ListResponse
                     .responseDinningTable(new DinnigResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
                             GenericResponse.toList("consulta no encontrada"), dinning))
                     , HttpStatus.OK);
         }
-        return GenericService.getSuccessfullListDinningTable(dinning);
+        return EntityResponse.getSuccessfullListDinningTable(dinning);
     }
 }

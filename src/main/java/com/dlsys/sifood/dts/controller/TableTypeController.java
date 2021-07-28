@@ -2,7 +2,7 @@ package com.dlsys.sifood.dts.controller;
 
 import com.dlsys.sifood.dts.entity.TableType;
 import com.dlsys.sifood.dts.model.TableTypeModel;
-import com.dlsys.sifood.dts.service.tableType.ITableTypeService;
+import com.dlsys.sifood.dts.service.impl.ITableTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class TableTypeController {
 
     @Autowired
-    ITableTypeService tableService;
+    private ITableTypeService tableService;
 
     @RequestMapping(value = "/catalog/tableType", method = RequestMethod.POST)
     public ResponseEntity<?> postProfileJob(@Valid @RequestBody TableType table, BindingResult result) {
