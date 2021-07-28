@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service;
+package com.dlsys.sifood.dts.service.dinningTable;
 
 import com.dlsys.sifood.dts.entity.DinningTable;
 import com.dlsys.sifood.dts.model.DinningModel;

@@ -1,10 +1,8 @@
 package com.dlsys.sifood.dts.controller;
 
-import com.dlsys.sifood.dts.dao.IDinningTableDao;
 import com.dlsys.sifood.dts.entity.DinningTable;
-import com.dlsys.sifood.dts.entity.TableType;
 import com.dlsys.sifood.dts.model.DinningModel;
-import com.dlsys.sifood.dts.service.IDinningTableService;
+import com.dlsys.sifood.dts.service.dinningTable.IDinningTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

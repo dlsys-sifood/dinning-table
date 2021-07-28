@@ -1,10 +1,13 @@
-package com.dlsys.sifood.dts.service;
+package com.dlsys.sifood.dts.service.tableType;
 
 import com.dlsys.sifood.dts.dao.ITableTypeDao;
 import com.dlsys.sifood.dts.dto.GenericResponse;
 import com.dlsys.sifood.dts.dto.TableTypeResponse;
 import com.dlsys.sifood.dts.entity.TableType;
 import com.dlsys.sifood.dts.model.TableTypeModel;
+import com.dlsys.sifood.dts.service.GenericService;
+import com.dlsys.sifood.dts.service.ServiceResponse;
+import com.dlsys.sifood.dts.service.tableType.ITableTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -19,18 +22,13 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
-public class TableTypeService implements ITableTypeService{
+public class TableTypeService implements ITableTypeService {
 
     private static final String BADREQUESTCODE = HttpStatus.BAD_REQUEST.toString();
     private static final String BADREQUESTDESCRIPTION = "BAD REQUEST";
-
-    private static final String OKREQUESTCODE = HttpStatus.OK.toString();
-    private static final String OKREQUESTDESCRIPTION = "OK";
 
     @Autowired
     ITableTypeDao tableDao;
@@ -38,47 +36,27 @@ public class TableTypeService implements ITableTypeService{
     @Override
     public ResponseEntity<?> postTableType(TableType table, BindingResult result) {
         if(result.hasErrors()){
-            return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                    .responseGeneric(new GenericResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
-                            result.getFieldErrors().stream()
-                                    .map(e -> "el campo: " + e.getField() + " " + e.getDefaultMessage())
-                                    .collect(Collectors.toList())))
-                    , HttpStatus.BAD_REQUEST);
+            return GenericService.getErrorsFieldResponse(result);
         }
-
         try{
             tableDao.save(table);
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                .responseTableType(new TableTypeResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
-                        GenericResponse.toList("guardado exitoso en el tipo de tablo"), table))
-                , HttpStatus.OK);
+        return GenericService.getSuccessfullListTableType(table);
     }
 
     @Override
     public ResponseEntity<?> putPorfile(TableType table, BindingResult result) {
         if(result.hasErrors()){
-            return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                    .responseGeneric(new GenericResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
-                            result.getFieldErrors().stream()
-                                    .map(e -> "el campo: " + e.getField() + " " + e.getDefaultMessage())
-                                    .collect(Collectors.toList())))
-                    , HttpStatus.BAD_REQUEST);
+            return GenericService.getErrorsFieldResponse(result);
         }
-
         try{
             tableDao.save(table);
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                .responseTableType(new TableTypeResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
-                        GenericResponse.toList("actualizado exitoso en el tipo de tablo"), table))
-                , HttpStatus.OK);
+        return GenericService.getSuccessfullListTableType(table);
     }
 
     @Override
@@ -105,10 +83,6 @@ public class TableTypeService implements ITableTypeService{
             } catch (RuntimeException e){
                 throw new RuntimeException(e);
             }
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                .responseTableType(new TableTypeResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
-                        GenericResponse.toList("actualizado exitoso en el tipo de tablo"), response))
-                , HttpStatus.OK);
-
+            return  GenericService.getSuccessfullListTableType(response);
     }
 }

@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service;
+package com.dlsys.sifood.dts.service.dinningTable;
 
 import com.dlsys.sifood.dts.dao.IDinningTableDao;
 import com.dlsys.sifood.dts.dao.ITableGroupDao;
@@ -7,6 +7,8 @@ import com.dlsys.sifood.dts.dto.GenericResponse;
 import com.dlsys.sifood.dts.entity.DinningTable;
 import com.dlsys.sifood.dts.entity.TableGroup;
 import com.dlsys.sifood.dts.model.DinningModel;
+import com.dlsys.sifood.dts.service.GenericService;
+import com.dlsys.sifood.dts.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -22,17 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 
 @Service
-public class DinningTableService implements IDinningTableService{
+public class DinningTableService implements IDinningTableService {
 
 
     private static final String BADREQUESTCODE = HttpStatus.BAD_REQUEST.toString();
     private static final String BADREQUESTDESCRIPTION = "BAD REQUEST";
-
-    private static final String OKREQUESTCODE = HttpStatus.OK.toString();
-    private static final String OKREQUESTDESCRIPTION = "OK";
 
     @Autowired
     IDinningTableDao dinningDao;
@@ -43,14 +42,8 @@ public class DinningTableService implements IDinningTableService{
     @Override
     public ResponseEntity<?> postDinningTable(DinningTable dinning, BindingResult result) {
         if(result.hasErrors()){
-            return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                    .responseGeneric(new GenericResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
-                            result.getFieldErrors().stream()
-                                    .map(e -> "el campo: " + e.getField() + " " + e.getDefaultMessage())
-                                    .collect(Collectors.toList())))
-                    , HttpStatus.BAD_REQUEST);
+            return GenericService.getErrorsFieldResponse(result);
         }
-
         try{
             dinningDao.save(dinning);
             TableGroup table = new TableGroup(null, 1);
@@ -59,40 +52,25 @@ public class DinningTableService implements IDinningTableService{
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                .responseDinningTable(new DinnigResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
-                        GenericResponse.toList("guardado exitoso en el tipo de tablo"), dinning))
-                , HttpStatus.OK);
+        return GenericService.getSuccessfullDinningTable(dinning);
     }
 
     @Override
     public ResponseEntity<?> putDinningTable(DinningTable dinning, BindingResult result) {
         if(result.hasErrors()){
-            return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                    .responseGeneric(new GenericResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
-                            result.getFieldErrors().stream()
-                                    .map(e -> "el campo: " + e.getField() + " " + e.getDefaultMessage())
-                                    .collect(Collectors.toList())))
-                    , HttpStatus.BAD_REQUEST);
+            return GenericService.getErrorsFieldResponse(result);
         }
-
         try{
             dinningDao.save(dinning);
         }catch (RuntimeException e){
             throw new RuntimeException(e);
         }
-
-        return new ResponseEntity<Map<String, Object>>(ServiceResponse
-                .responseDinningTable(new DinnigResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
-                        GenericResponse.toList("guardado exitoso en el tipo de tablo"), dinning))
-                , HttpStatus.OK);
+        return GenericService.getSuccessfullDinningTable(dinning);
     }
 
     @Override
     public ResponseEntity<?> getDinningTable(DinningModel table) {
         List<DinningTable> dinning = new ArrayList<>();
-
         try {
             dinning = dinningDao.findAll(new Specification<DinningTable>() {
                 @Override
@@ -119,8 +97,12 @@ public class DinningTableService implements IDinningTableService{
         }catch(RuntimeException e){
             throw new RuntimeException(e);
         }
-        return new ResponseEntity<>(ServiceResponse
-                .responseDinningTable(new DinnigResponse(OKREQUESTCODE, OKREQUESTDESCRIPTION,
-                        GenericResponse.toList("Consulta encontrada"), dinning)), HttpStatus.OK);
+        if(dinning.isEmpty()){
+            return new ResponseEntity<Map<String, Object>>(ServiceResponse
+                    .responseDinningTable(new DinnigResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
+                            GenericResponse.toList("consulta no encontrada"), dinning))
+                    , HttpStatus.OK);
+        }
+        return GenericService.getSuccessfullListDinningTable(dinning);
     }
 }
