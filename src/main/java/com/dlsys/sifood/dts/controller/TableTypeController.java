@@ -2,7 +2,7 @@ package com.dlsys.sifood.dts.controller;
 
 import com.dlsys.sifood.dts.entity.TableType;
 import com.dlsys.sifood.dts.model.TableTypeModel;
-import com.dlsys.sifood.dts.service.impl.ITableTypeService;
+import com.dlsys.sifood.dts.service.ITableTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

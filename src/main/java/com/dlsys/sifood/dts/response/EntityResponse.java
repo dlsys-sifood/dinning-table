@@ -23,12 +23,23 @@ public class EntityResponse {
     private static final String OKREQUESTCODE = HttpStatus.OK.toString();
     private static final String OKREQUESTDESCRIPTION = "OK";
 
+    private static final String NOTFOUNDCODE = HttpStatus.NOT_FOUND.toString();
+    private static final String NOTFOUNDDESCRIPTION = "NOT FOUND";
+
+
     public static ResponseEntity<?> getErrorsFieldResponse(BindingResult result){
         return new ResponseEntity<Map<String, Object>>(ListResponse
                 .responseGeneric(new GenericResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
                         result.getFieldErrors().stream()
                                 .map(e -> "el campo: " + e.getField() + " " + e.getDefaultMessage())
                                 .collect(Collectors.toList())))
+                , HttpStatus.BAD_REQUEST);
+    }
+
+    public static ResponseEntity<?> getNotFoundMessage(){
+        return new ResponseEntity<Map<String, Object>>(ListResponse
+                .responseGeneric(new GenericResponse(NOTFOUNDCODE, NOTFOUNDDESCRIPTION,
+                        GenericResponse.toList("consulta no encontrada")))
                 , HttpStatus.BAD_REQUEST);
     }
 

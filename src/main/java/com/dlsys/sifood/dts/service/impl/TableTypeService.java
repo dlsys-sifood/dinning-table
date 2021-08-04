@@ -1,10 +1,10 @@
-package com.dlsys.sifood.dts.service;
+package com.dlsys.sifood.dts.service.impl;
 
 import com.dlsys.sifood.dts.dao.ITableTypeDao;
 import com.dlsys.sifood.dts.entity.TableType;
 import com.dlsys.sifood.dts.model.TableTypeModel;
 import com.dlsys.sifood.dts.response.EntityResponse;
-import com.dlsys.sifood.dts.service.impl.ITableTypeService;
+import com.dlsys.sifood.dts.service.ITableTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -23,9 +23,6 @@ import java.util.UUID;
 
 @Service
 public class TableTypeService implements ITableTypeService {
-
-    private static final String BADREQUESTCODE = HttpStatus.BAD_REQUEST.toString();
-    private static final String BADREQUESTDESCRIPTION = "BAD REQUEST";
 
     @Autowired
     private ITableTypeDao tableDao;
@@ -79,6 +76,10 @@ public class TableTypeService implements ITableTypeService {
                 });
             } catch (RuntimeException e){
                 throw new RuntimeException(e);
+            }
+
+            if (response.isEmpty()) {
+                return EntityResponse.getNotFoundMessage();
             }
             return  EntityResponse.getSuccessfullListTableType(response);
     }

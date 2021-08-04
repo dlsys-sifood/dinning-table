@@ -2,7 +2,7 @@ package com.dlsys.sifood.dts.controller;
 
 import com.dlsys.sifood.dts.entity.DinningTable;
 import com.dlsys.sifood.dts.model.DinningModel;
-import com.dlsys.sifood.dts.service.impl.IDinningTableService;
+import com.dlsys.sifood.dts.service.IDinningTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+
 import javax.validation.Valid;
 
 @RestController
+@EnableSwagger2
 @RequestMapping(value = "/dinning")
 public class DinningTableController {
 

@@ -1,4 +1,4 @@
-package com.dlsys.sifood.dts.service;
+package com.dlsys.sifood.dts.service.impl;
 
 import com.dlsys.sifood.dts.dao.IDinningTableDao;
 import com.dlsys.sifood.dts.dao.ITableGroupDao;
@@ -9,7 +9,7 @@ import com.dlsys.sifood.dts.entity.TableGroup;
 import com.dlsys.sifood.dts.model.DinningModel;
 import com.dlsys.sifood.dts.response.EntityResponse;
 import com.dlsys.sifood.dts.response.ListResponse;
-import com.dlsys.sifood.dts.service.impl.IDinningTableService;
+import com.dlsys.sifood.dts.service.IDinningTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
