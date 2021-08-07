@@ -30,7 +30,7 @@ public class DinningTableController {
         return dinningService.postDinningTable(dinning, result);
     }
     @RequestMapping(value = "/getInformationDinning", method = RequestMethod.GET)
-    public ResponseEntity<?> getDinningTable(@RequestBody DinningModel dinning) {
+    public ResponseEntity<?> getDinningTable(@RequestBody  DinningModel dinning) {
         return dinningService.getDinningTable(dinning);
     }
     @RequestMapping(value = "/puInformationDinning", method = RequestMethod.PUT)

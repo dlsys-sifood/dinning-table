@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TableTypeModel extends GenericModel{
-    private String seccion;
+    private String seccion = "";
 }

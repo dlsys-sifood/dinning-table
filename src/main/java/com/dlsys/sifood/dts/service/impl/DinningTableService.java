@@ -30,10 +30,6 @@ import java.util.UUID;
 @Service
 public class DinningTableService implements IDinningTableService {
 
-
-    private static final String BADREQUESTCODE = HttpStatus.BAD_REQUEST.toString();
-    private static final String BADREQUESTDESCRIPTION = "BAD REQUEST";
-
     @Autowired
     private IDinningTableDao dinningDao;
 
@@ -99,10 +95,9 @@ public class DinningTableService implements IDinningTableService {
             throw new RuntimeException(e);
         }
         if(dinning.isEmpty()){
-            return new ResponseEntity<Map<String, Object>>(ListResponse
-                    .responseDinningTable(new DinnigResponse(BADREQUESTCODE, BADREQUESTDESCRIPTION,
-                            GenericResponse.toList("consulta no encontrada"), dinning))
-                    , HttpStatus.OK);
+            if (dinning.isEmpty()) {
+                return EntityResponse.getNotFoundMessage();
+            }
         }
         return EntityResponse.getSuccessfullListDinningTable(dinning);
     }
